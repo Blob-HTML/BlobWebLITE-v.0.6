@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My.PPS</title>
+    <link id="favicon" rel="icon"
+        href="https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="index.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #1a1a1a;
+            color: #00ff00;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 80px;
+            background-color: #000;
+            transition: width 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar.active {
+            width: 200px;
+        }
+
+        .sidebar .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+        }
+
+        .sidebar .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        .sidebar .user {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .User-me {
+            width: 50px;
+            border-radius: 50%;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0 16px;
+        }
+
+        .sidebar ul li {
+            margin: 16px 0;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00ff00;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #00ff00;
+            color: #1a1a1a;
+        }
+
+        .tooltip {
+            display: none;
+        }
+
+        .sidebar:not(.active) .nav-item {
+            display: none;
+        }
+
+        .main-content {
+            margin-left: 80px;
+            padding: 40px;
+            transition: margin-left 0.3s;
+        }
+
+        .sidebar.active~.main-content {
+            margin-left: 200px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 24px;
+            background-color: #1a1a1a;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00ff00;
+            color: #1a1a1a;
+        }
+
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #00ff00;
+        }
+
+        body {
+            margin: 0;
+            padding: 2rem;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            --bg-color: #ffffff;
+            --text-color: #00ff00;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            /* or any width you want */
+            margin-top: 20px;
+            gap: 7px;
+        }
+    </style>
+
+    <script> // Apply saved theme before page renders
+
+        const favicons = [
+            "https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png",
+            "https://www.wikipedia.org/static/favicon/wikipedia.ico",
+            "https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico",
+            "https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico"
+        ];
+
+        const pageTitles = ['Google', 'My.PPS', 'Wikipedia', 'Google Docs'];
+
+        // Load saved favicon and title on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            // Apply theme
+            if (localStorage.getItem("theme") === "dark") {
+                document.documentElement.classList.add("dark-mode");
+            }
+
+            // Apply favicon
+            const savedFavicon = localStorage.getItem("faviconIndex");
+            if (savedFavicon !== null) {
+                setFavicon(parseInt(savedFavicon));
+            }
+
+            // Apply title
+            const savedTitleIndex = localStorage.getItem("titleIndex");
+            if (savedTitleIndex !== null) {
+                document.title = pageTitles[parseInt(savedTitleIndex)];
+            }
+
+            // Sidebar toggle
+            const sidebar = document.querySelector('.sidebar');
+            const btn = document.querySelector('#btn');
+            btn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Theme toggle
+            window.toggleMode = function () {
+                const html = document.documentElement;
+                const isDark = html.classList.toggle("dark-mode");
+                localStorage.setItem("theme", isDark ? "dark" : "light");
+            };
+        });
+
+        let currentFavicon = 0;
+        function setFavicon(index) {
+            currentFavicon = index;
+            let oldLink = document.getElementById("favicon");
+            if (oldLink) oldLink.remove();
+
+            let newLink = document.createElement("link");
+            newLink.id = "favicon";
+            newLink.rel = "icon";
+            newLink.type = "image/x-icon";
+            newLink.href = favicons[currentFavicon];
+
+            document.head.appendChild(newLink);
+        }
+
+        function switchFavicon() {
+            currentFavicon = (currentFavicon + 1) % favicons.length;
+            setFavicon(currentFavicon);
+            localStorage.setItem("faviconIndex", currentFavicon.toString());
+        }
+
+        let titleIndex = 0;
+        function changePageTitle() {
+            titleIndex = (titleIndex + 1) % pageTitles.length;
+            document.title = pageTitles[titleIndex];
+            localStorage.setItem("titleIndex", titleIndex.toString());
+        }
+    </script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="top">
+            <div class="logo">
+                <i class="bx bx-code-block"></i>
+                <span class="nav-item">Blob Web LITE v.0.4</span>
+            </div>
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <div class="user">
+            <img src="User.png" alt="me" class="User-me" />
+            <div>
+                <p class="bold">User</p>
+            </div>
+        </div>
+        <ul>
+            <li>
+                <a href="index.html"><i class='bx bx-home-alt'></i> <span class="nav-item">Home</span></a>
+            </li>
+            <li>
+                <a href="Games.html"><i class='bx bx-game'></i> <span class="nav-item">Games</span></a>
+            </li>
+            <li>
+                <a href="proxies.html"><i class='bx bx-windows'></i> <span class="nav-item">Proxies</span></a>
+            </li>
+            <li>
+                <a href="Aboutme.html"><i class='bx bx-body'></i> <span class="nav-item">About me</span></a>
+            </li>
+            <li>
+                <a href="settings.html"><i class="bx bx-cog"></i> <span class="nav-item">Settings</span></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>Settings Tab</h1>
+        <hr>
+        <div class="button-row">
+            <button onclick="toggleMode()">Toggle Light/Dark Mode</button>
+            <button onclick="switchFavicon()">Toggle Favicon</button>
+            <button onclick="changePageTitle()"> Change Page Title</button>
+        </div>
+    </div>
+
+</html>
