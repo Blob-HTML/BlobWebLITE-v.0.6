@@ -1,0 +1,187 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #1a1a1a;
+      color: #00ff00;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 80px;
+      background-color: #000;
+      transition: width 0.3s;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .sidebar.active {
+      width: 200px;
+    }
+
+    .sidebar .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    .sidebar .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+    }
+
+    .sidebar .user {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .User-me {
+      width: 50px;
+      border-radius: 50%;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0 16px;
+    }
+
+    .sidebar ul li {
+      margin: 16px 0;
+    }
+
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #00ff00;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #00ff00;
+      color: #1a1a1a;
+    }
+
+    .sidebar:not(.active) .nav-item {
+      display: none;
+    }
+
+    .main-content {
+      margin-left: 80px;
+      padding: 40px;
+      transition: margin-left 0.3s;
+    }
+
+    .sidebar.active~.main-content {
+      margin-left: 200px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 24px;
+      background-color: #1a1a1a;
+      color: #00ff00;
+      border: 2px solid #00ff00;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    button:hover {
+      background-color: #00ff00;
+      color: #1a1a1a;
+    }
+
+    :root {
+      --bg-color: #1a1a1a;
+      --text-color: #00ff00;
+    }
+
+    .dark-mode {
+      --bg-color: #ffffff;
+      --text-color: #00ff00;
+    }
+
+    .gameWrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      flex-grow: 1;
+    }
+
+    .exitButton {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #1a1a1a;
+      color: #00ff00;
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+      display: none;
+    }
+
+    .exitButton:hover {
+      background-color: #00ff00;
+      color: #1a1a1a;
+    }
+
+    .gameSelection {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 40px;
+      margin-top: -200px;
+    }
+
+    .gameSelection img {
+      width: 250px;
+      max-width: 90%;
+      height: 150px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00ff00;
+      transition: transform 0.3s;
+    }
+
+    .gameSelection img:hover {
+      transform: scale(1.05);
+    }
