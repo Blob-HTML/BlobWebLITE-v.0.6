@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My.PPS</title>
-  <link id="favicon" rel="icon" href="https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png" />
+  <link id="favicon" rel="icon"
+    href="https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
   <style>
-    * {
+    html, body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
       height: 100%;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #1a1a1a;
+      background: #1a1a1a;
       color: #00ff00;
+      font-family: Arial, sans-serif;
     }
 
     .sidebar {
       position: fixed;
-      top: 0;
       left: 0;
-      height: 100%;
+      top: 0;
       width: 80px;
-      background-color: #000;
+      height: 100%;
+      background: #000;
       transition: width 0.3s;
       overflow: hidden;
-      z-index: 1;
     }
 
     .sidebar.active {
@@ -40,15 +33,14 @@
     }
 
     .sidebar .top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .sidebar .logo {
       display: flex;
-      align-items: center;
       gap: 8px;
       font-weight: bold;
     }
@@ -99,7 +91,7 @@
       transition: margin-left 0.3s;
     }
 
-    .sidebar.active~.main-content {
+    .sidebar.active ~ .main-content {
       margin-left: 200px;
     }
 
@@ -108,50 +100,43 @@
       margin-bottom: 20px;
     }
 
-    button {
-      display: block;
-      margin: 20px auto;
-      padding: 12px 24px;
-      background-color: #1a1a1a;
-      color: #00ff00;
-      border: 2px solid #00ff00;
+    .gameSelection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin-top: 0px;
+    }
+
+    .gameSelection img {
+      width: 250px;
+      height: 150px;
+      max-width: 90%;
       border-radius: 12px;
+      box-shadow: 0 0 15px #00ff00;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
+      transition: transform 0.3s;
     }
 
-    button:hover {
-      background-color: #00ff00;
-      color: #1a1a1a;
-    }
-
-    :root {
-      --bg-color: #1a1a1a;
-      --text-color: #00ff00;
-    }
-
-    .dark-mode {
-      --bg-color: #ffffff;
-      --text-color: #00ff00;
+    .gameSelection img:hover {
+      transform: scale(1.05);
     }
 
     .gameWrapper {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
+      width: 100%;
+      height: 100%;
+      background: #1a1a1a;
       z-index: 999;
       display: none;
-      flex-direction: column;
     }
 
-    iframe {
+    .gameWrapper iframe {
       width: 100%;
       height: 100%;
       border: none;
-      flex-grow: 1;
     }
 
     .exitButton {
@@ -165,131 +150,81 @@
       border-radius: 8px;
       cursor: pointer;
       z-index: 1000;
-      display: none;
     }
 
     .exitButton:hover {
       background-color: #00ff00;
       color: #1a1a1a;
     }
-
-    .gameSelection {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      gap: 40px;
-      margin-top: -200px;
-    }
-
-    .gameSelection img {
-      width: 250px;
-      max-width: 90%;
-      height: 150px;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 0 15px #00ff00;
-      transition: transform 0.3s;
-    }
-
-    .gameSelection img:hover {
-      transform: scale(1.05);
-    }
   </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="top">
+      <div class="logo">
+        <i class="bx bx-code-block"></i>
+        <span class="nav-item">Blob Web LITE v.0.4</span>
+      </div>
+      <i class="bx bx-menu" id="btn"></i>
+    </div>
+    <div class="user">
+      <img src="User.png" alt="me" class="User-me" />
+      <div><p class="bold">User</p></div>
+    </div>
+    <ul>
+      <li><a href="index.html"><i class='bx bx-home-alt'></i><span class="nav-item">Home</span></a></li>
+      <li><a href="Games.html"><i class='bx bx-game'></i><span class="nav-item">Games</span></a></li>
+      <li><a href="proxies.html"><i class='bx bx-windows'></i><span class="nav-item">Proxies</span></a></li>
+      <li><a href="Aboutme.html"><i class='bx bx-body'></i><span class="nav-item">About me</span></a></li>
+      <li><a href="settings.html"><i class="bx bx-cog"></i><span class="nav-item">Settings</span></a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h1>Welcome to Games tab</h1>
+  </div>
+
+  <div class="gameSelection" id="gameSelection">
+    <img src="https://slope-online.org/data/image/slope-io-game.jpg" alt="Slope Game" onclick="startGame('slope')">
+    <img src="https://global-uploads.webflow.com/5fa23905123118739c5e21e2/64dd8b9d1a903a3f764b814b_FNCThumbnail.png" alt="Fruit Ninja" onclick="startGame('fruitninja')">
+  </div>
+
+  <div class="gameWrapper" id="slopeWrapper">
+    <button class="exitButton" onclick="exitGame('slope')">Exit Game</button>
+  </div>
+
+  <div class="gameWrapper" id="fruitninjaWrapper">
+    <button class="exitButton" onclick="exitGame('fruitninja')">Exit Game</button>
+  </div>
 
   <script>
-    const favicons = [
-      "https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png",
-      "https://www.wikipedia.org/static/favicon/wikipedia.ico",
-      "https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico",
-      "https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico"
-    ];
-
-    const pageTitles = ['Google', 'My.PPS', 'Wikipedia', 'Google Docs'];
-
-    document.addEventListener("DOMContentLoaded", () => {
-      if (localStorage.getItem("theme") === "dark") {
-        document.documentElement.classList.add("dark-mode");
-      }
-
-      const savedFavicon = localStorage.getItem("faviconIndex");
-      if (savedFavicon !== null) setFavicon(parseInt(savedFavicon));
-
-      const savedTitleIndex = localStorage.getItem("titleIndex");
-      if (savedTitleIndex !== null) document.title = pageTitles[parseInt(savedTitleIndex)];
-
-      document.querySelector('#btn').addEventListener('click', () => {
-        document.querySelector('.sidebar').classList.toggle('active');
-      });
-
-      window.toggleMode = function () {
-        const html = document.documentElement;
-        const isDark = html.classList.toggle("dark-mode");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-      };
-
-      window.slopeWrapper = document.getElementById("slopeWrapper");
-      window.fruitninjaWrapper = document.getElementById("fruitninjaWrapper");
-      window.slopeIframe = document.getElementById("slopeGame");
-      window.fruitninjaIframe = document.getElementById("fruitninjaGame");
-      window.slopeExit = document.getElementById("exitSlope");
-      window.fruitninjaExit = document.getElementById("exitFruitninja");
-
-      slopeExit.addEventListener("click", () => exitGame("slope"));
-      fruitninjaExit.addEventListener("click", () => exitGame("fruitninja"));
-    });
-
-    function setFavicon(index) {
-      let oldLink = document.getElementById("favicon");
-      if (oldLink) oldLink.remove();
-
-      let newLink = document.createElement("link");
-      newLink.id = "favicon";
-      newLink.rel = "icon";
-      newLink.type = "image/x-icon";
-      newLink.href = favicons[index];
-
-      document.head.appendChild(newLink);
-      localStorage.setItem("faviconIndex", index.toString());
-    }
-
-    function changePageTitle() {
-      let titleIndex = (parseInt(localStorage.getItem("titleIndex") || "0") + 1) % pageTitles.length;
-      document.title = pageTitles[titleIndex];
-      localStorage.setItem("titleIndex", titleIndex.toString());
-    }
+    const slopeURL = "https://storage.classroomsarecool.mex.com/slope-2/index.html";
+    const fruitninjaURL = "https://storage.classroomsarecool.mex.com/fruitninja/index.html";
 
     function startGame(game) {
       document.getElementById("gameSelection").style.display = "none";
 
-      if (game === "slope") {
-        slopeWrapper.style.display = "flex";
-        slopeIframe.style.display = "block";
-        slopeExit.style.display = "block";
-        openFullscreen(slopeWrapper);
-      } else if (game === "fruitninja") {
-        fruitninjaWrapper.style.display = "flex";
-        fruitninjaIframe.style.display = "block";
-        fruitninjaExit.style.display = "block";
-        openFullscreen(fruitninjaWrapper);
-      }
+      let wrapper = game === "slope" ? document.getElementById("slopeWrapper") : document.getElementById("fruitninjaWrapper");
+      let iframe = document.createElement("iframe");
+
+      iframe.src = game === "slope" ? slopeURL : fruitninjaURL;
+      iframe.allowFullscreen = true;
+      iframe.id = game + "Game";
+
+      wrapper.innerHTML = `<button class="exitButton" onclick="exitGame('${game}')">Exit Game</button>`;
+      wrapper.appendChild(iframe);
+      wrapper.style.display = "block";
+
+      openFullscreen(document.documentElement);
     }
 
     function exitGame(game) {
       document.getElementById("gameSelection").style.display = "flex";
 
-      if (game === "slope") {
-        slopeWrapper.style.display = "none";
-        slopeIframe.style.display = "none";
-        slopeExit.style.display = "none";
-        slopeIframe.src = slopeIframe.src;
-      } else if (game === "fruitninja") {
-        fruitninjaWrapper.style.display = "none";
-        fruitninjaIframe.style.display = "none";
-        fruitninjaExit.style.display = "none";
-        fruitninjaIframe.src = fruitninjaIframe.src;
-      }
+      let wrapper = game === "slope" ? document.getElementById("slopeWrapper") : document.getElementById("fruitninjaWrapper");
+      wrapper.style.display = "none";
+      wrapper.innerHTML = `<button class="exitButton" onclick="exitGame('${game}')">Exit Game</button>`;
 
       exitFullscreen();
     }
@@ -316,55 +251,15 @@
 
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement) {
-        if (slopeWrapper && slopeWrapper.style.display === "flex") exitGame("slope");
-        if (fruitninjaWrapper && fruitninjaWrapper.style.display === "flex") exitGame("fruitninja");
+        exitGame("slope");
+        exitGame("fruitninja");
       }
     });
+
+    document.getElementById("btn").addEventListener("click", () => {
+      document.querySelector(".sidebar").classList.toggle("active");
+    });
   </script>
-</head>
-
-<body>
-  <div class="sidebar">
-    <div class="top">
-      <div class="logo">
-        <i class="bx bx-code-block"></i>
-        <span class="nav-item">Blob Web LITE v.0.4</span>
-      </div>
-      <i class="bx bx-menu" id="btn"></i>
-    </div>
-    <div class="user">
-      <img src="User.png" alt="me" class="User-me" />
-      <div>
-        <p class="bold">User</p>
-      </div>
-    </div>
-    <ul>
-      <li><a href="index.html"><i class='bx bx-home-alt'></i> <span class="nav-item">Home</span></a></li>
-      <li><a href="Games.html"><i class='bx bx-game'></i> <span class="nav-item">Games</span></a></li>
-      <li><a href="proxies.html"><i class='bx bx-windows'></i> <span class="nav-item">Proxies</span></a></li>
-      <li><a href="Aboutme.html"><i class='bx bx-body'></i> <span class="nav-item">About me</span></a></li>
-      <li><a href="settings.html"><i class="bx bx-cog"></i> <span class="nav-item">Settings</span></a></li>
-    </ul>
-  </div>
-
-  <div class="main-content">
-    <h1>Welcome to Games tab</h1>
-  </div>
-
-  <div class="gameSelection" id="gameSelection">
-    <img src="https://slope-online.org/data/image/slope-io-game.jpg" alt="Slope Game" onclick="startGame('slope')">
-    <img src="https://global-uploads.webflow.com/5fa23905123118739c5e21e2/64dd8b9d1a903a3f764b814b_FNCThumbnail.png" alt="Fruit Ninja" onclick="startGame('fruitninja')">
-  </div>
-
-  <div class="gameWrapper" id="slopeWrapper">
-    <iframe id="slopeGame" src="https://storage.classroomsarecool.mex.com/slope-2/index.html" allowfullscreen></iframe>
-    <button class="exitButton" id="exitSlope">Exit Game</button>
-  </div>
-
-  <div class="gameWrapper" id="fruitninjaWrapper">
-    <iframe id="fruitninjaGame" src="https://storage.classroomsarecool.mex.com/fruitninja/index.html" allowfullscreen></iframe>
-    <button class="exitButton" id="exitFruitninja">Exit Game</button>
-  </div>
 </body>
-
 </html>
+
