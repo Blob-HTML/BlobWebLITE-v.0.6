@@ -8,7 +8,6 @@
     <link id="favicon" rel="icon"
         href="https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <script src="index.js"></script>
 
     <style>
         * {
@@ -149,14 +148,33 @@
             --text-color: #00ff00;
         }
 
-        .button-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 600px;
-            /* or any width you want */
-            margin-top: 20px;
-            gap: 7px;
+        button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+        }
+
+        a:link {
+            color: #00ff00;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #00ff00;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #00ff00;
+            background-color: transparent;
+            text-decoration: underline;
         }
     </style>
 
@@ -270,13 +288,14 @@
     </div>
 
     <div class="main-content">
-        <h1>Settings Tab</h1>
-        <hr>
-        <div class="button-row">
-            <button onclick="toggleMode()">Toggle Light/Dark Mode</button>
-            <button onclick="switchFavicon()">Toggle Favicon</button>
-            <button onclick="changePageTitle()"> Change Page Title</button>
-        </div>
+        <h1>About Me</h1>
+        <p>Hello, Im Blob-HTML, an inexperienced (kinda) coder that has too much free time. I code HTML, CSS mainly but
+            do a little JavaScript</p>
+        <br>
+        <a href="https://github.com/Blob-HTML" target="_blank">
+            <p>Check Out my GitHub!</p>
+        </a>
+
     </div>
 
 </html>
