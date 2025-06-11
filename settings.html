@@ -5,10 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My.PPS</title>
-    <link id="favicon" rel="icon"
+    <link id="favicon" rel="icon" type="image/png"
         href="https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <script src="index.js"></script>
 
     <style>
         * {
@@ -90,10 +89,6 @@
             color: #1a1a1a;
         }
 
-        .tooltip {
-            display: none;
-        }
-
         .sidebar:not(.active) .nav-item {
             display: none;
         }
@@ -135,6 +130,11 @@
             --text-color: #00ff00;
         }
 
+        .dark-mode {
+            --bg-color: #ffffff;
+            --text-color: #00ff00;
+        }
+
         body {
             margin: 0;
             padding: 2rem;
@@ -144,50 +144,45 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        .dark-mode {
-            --bg-color: #ffffff;
-            --text-color: #00ff00;
-        }
-
         .button-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             max-width: 600px;
-            /* or any width you want */
             margin-top: 20px;
             gap: 7px;
         }
     </style>
 
-    <script> // Apply saved theme before page renders
-
+    <script>
         const favicons = [
-            "https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png",
-            "https://www.wikipedia.org/static/favicon/wikipedia.ico",
-            "https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico",
-            "https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico"
+            { url: "https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png", type: "image/png" },
+            { url: "https://www.wikipedia.org/static/favicon/wikipedia.ico", type: "image/x-icon" },
+            { url: "https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico", type: "image/x-icon" },
+            { url: "https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico", type: "image/x-icon" }
         ];
 
         const pageTitles = ['Google', 'My.PPS', 'Wikipedia', 'Google Docs'];
+        let currentFavicon = 0;
+        let titleIndex = 0;
 
-        // Load saved favicon and title on page load
         document.addEventListener("DOMContentLoaded", () => {
             // Apply theme
             if (localStorage.getItem("theme") === "dark") {
                 document.documentElement.classList.add("dark-mode");
             }
 
-            // Apply favicon
+            // Restore favicon
             const savedFavicon = localStorage.getItem("faviconIndex");
             if (savedFavicon !== null) {
                 setFavicon(parseInt(savedFavicon));
             }
 
-            // Apply title
+            // Restore title
             const savedTitleIndex = localStorage.getItem("titleIndex");
             if (savedTitleIndex !== null) {
-                document.title = pageTitles[parseInt(savedTitleIndex)];
+                titleIndex = parseInt(savedTitleIndex);
+                document.title = pageTitles[titleIndex];
             }
 
             // Sidebar toggle
@@ -197,40 +192,36 @@
                 sidebar.classList.toggle('active');
             });
 
-            // Theme toggle
+            // Expose toggle functions
             window.toggleMode = function () {
                 const html = document.documentElement;
                 const isDark = html.classList.toggle("dark-mode");
                 localStorage.setItem("theme", isDark ? "dark" : "light");
             };
+
+            window.switchFavicon = function () {
+                currentFavicon = (currentFavicon + 1) % favicons.length;
+                setFavicon(currentFavicon);
+                localStorage.setItem("faviconIndex", currentFavicon.toString());
+            };
+
+            window.changePageTitle = function () {
+                titleIndex = (titleIndex + 1) % pageTitles.length;
+                document.title = pageTitles[titleIndex];
+                localStorage.setItem("titleIndex", titleIndex.toString());
+            };
         });
 
-        let currentFavicon = 0;
         function setFavicon(index) {
             currentFavicon = index;
-            let oldLink = document.getElementById("favicon");
-            if (oldLink) oldLink.remove();
+            document.querySelectorAll('link[rel="icon"]').forEach(el => el.remove());
 
-            let newLink = document.createElement("link");
-            newLink.id = "favicon";
+            const newLink = document.createElement('link');
             newLink.rel = "icon";
-            newLink.type = "image/x-icon";
-            newLink.href = favicons[currentFavicon];
+            newLink.type = favicons[currentFavicon].type;
+            newLink.href = favicons[currentFavicon].url + "?v=" + new Date().getTime(); // prevent cache
 
             document.head.appendChild(newLink);
-        }
-
-        function switchFavicon() {
-            currentFavicon = (currentFavicon + 1) % favicons.length;
-            setFavicon(currentFavicon);
-            localStorage.setItem("faviconIndex", currentFavicon.toString());
-        }
-
-        let titleIndex = 0;
-        function changePageTitle() {
-            titleIndex = (titleIndex + 1) % pageTitles.length;
-            document.title = pageTitles[titleIndex];
-            localStorage.setItem("titleIndex", titleIndex.toString());
         }
     </script>
 </head>
@@ -245,7 +236,7 @@
             <i class="bx bx-menu" id="btn"></i>
         </div>
         <div class="user">
-            <img src="https://static.vecteezy.com/system/resources/previews/008/302/462/original/eps10-grey-user-icon-or-logo-in-simple-flat-trendy-modern-style-isolated-on-white-background-free-vector.jpg" alt="me" class="User-me" />
+            <img src="User.png" alt="me" class="User-me" />
             <div>
                 <p class="bold">User</p>
             </div>
@@ -275,8 +266,9 @@
         <div class="button-row">
             <button onclick="toggleMode()">Toggle Light/Dark Mode</button>
             <button onclick="switchFavicon()">Toggle Favicon</button>
-            <button onclick="changePageTitle()"> Change Page Title</button>
+            <button onclick="changePageTitle()">Change Page Title</button>
         </div>
     </div>
+</body>
 
 </html>
