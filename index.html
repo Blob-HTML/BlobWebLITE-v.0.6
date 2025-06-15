@@ -20,8 +20,8 @@
         body {
             height: 100%;
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #1a1a1a;
-            color: #00ff00;
+            background-color: #793eb4;
+            color: #fff;
         }
 
         .sidebar {
@@ -61,8 +61,8 @@
         }
 
         .User-me {
-            width: 50px;
-            border-radius: 50%;
+            width: 40px;
+            border-radius: 100%;
         }
 
         .sidebar ul {
@@ -78,15 +78,15 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #00ff00;
+            color: #fff;
             text-decoration: none;
             padding: 10px;
             border-radius: 8px;
         }
 
         .sidebar ul li a:hover {
-            background-color: #00ff00;
-            color: #1a1a1a;
+            background-color: #793eb4;
+            color: #fff;
         }
 
         .tooltip {
@@ -101,6 +101,14 @@
             margin-left: 80px;
             padding: 40px;
             transition: margin-left 0.3s;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(80vh - 0px);
+
+            text-align: center;
         }
 
         .sidebar.active~.main-content {
@@ -116,23 +124,23 @@
             display: block;
             margin: 20px auto;
             padding: 12px 24px;
-            background-color: #1a1a1a;
-            color: #00ff00;
-            border: 2px solid #00ff00;
+            background-color: #793eb4;
+            color: #ffffff;
+            border: 2px solid#a97cd6;
             border-radius: 12px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
 
         button:hover {
-            background-color: #00ff00;
-            color: #1a1a1a;
+            background-color: #6e16c6;
+            color: #ffffff;
+            box-shadow: 0px 0px 95px 45px #6e16c6;
         }
 
-
-        :root {
-            --bg-color: #1a1a1a;
-            --text-color: #00ff00;
+        .root {
+            --bg-color: #793eb4;
+            --text-color: #ffffff;
         }
 
         body {
@@ -146,7 +154,7 @@
 
         .dark-mode {
             --bg-color: #ffffff;
-            --text-color: #00ff00;
+            --text-color: #793eb4;
         }
 
         .button2 {
@@ -180,8 +188,8 @@
         }
 
         .Blobglow {
-            color: #00ff00;
-            text-shadow: 0 0 18px #00ff00
+            color: #ffffff;
+            text-shadow: 0 0 18px #ffffff
         }
     </style>
 
@@ -268,14 +276,14 @@
         <div class="top">
             <div class="logo">
                 <i class="bx bx-code-block"></i>
-                <span class="nav-item">Blob Web LITE v.0.4</span>
+                <span class="nav-item">Blob Web LITE v.0.9</span>
             </div>
             <i class="bx bx-menu" id="btn"></i>
         </div>
         <div class="user">
-            <img src="https://static.vecteezy.com/system/resources/previews/008/302/462/original/eps10-grey-user-icon-or-logo-in-simple-flat-trendy-modern-style-isolated-on-white-background-free-vector.jpg" alt="me" class="User-me" />
+            <img src="https://i.postimg.cc/rmC4bdZ0/Chat-GPT-Image-Jun-14-2025-05-58-35-PM.png" alt="me"
+                class="User-me" />
             <div>
-                <p class="bold">User</p>
             </div>
         </div>
         <ul>
@@ -299,9 +307,13 @@
 
     <div class="main-content">
         <h1>Welcome to <span class="Blobglow">Blob Web</span></h1>
-        <a href="proxies.html">
+        <a href="Proxies.html">
             <button class="Button2">Get Searching</button>
         </a>
+    </div>
+
+
+</html>
     </div>
     
 
