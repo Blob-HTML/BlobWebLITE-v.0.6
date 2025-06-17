@@ -20,8 +20,8 @@
         body {
             height: 100%;
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #1a1a1a;
-            color: #00ff00;
+            background-color: #793eb4;
+            color: #fff;
         }
 
         .sidebar {
@@ -61,8 +61,8 @@
         }
 
         .User-me {
-            width: 50px;
-            border-radius: 50%;
+            width: 40px;
+            border-radius: 100%;
         }
 
         .sidebar ul {
@@ -78,15 +78,15 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #00ff00;
+            color: #fff;
             text-decoration: none;
             padding: 10px;
             border-radius: 8px;
         }
 
         .sidebar ul li a:hover {
-            background-color: #00ff00;
-            color: #1a1a1a;
+            background-color: #793eb4;
+            color: #fff;
         }
 
         .tooltip {
@@ -113,13 +113,13 @@
         }
 
         button:hover {
-            background-color: #00ff00;
-            color: #1a1a1a;
+            background-color: #793eb4;
+            color: #fff;
         }
 
         :root {
-            --bg-color: #1a1a1a;
-            --text-color: #00ff00;
+            --bg-color: #793eb4;
+            --text-color: #fff;
         }
 
         body {
@@ -132,7 +132,7 @@
         }
 
         .dark-mode {
-            --bg-color: #ffffff;
+            --bg-color: #1a1a1a;
             --text-color: #00ff00;
         }
 
@@ -144,7 +144,7 @@
         }
 
         .input {
-            border: 2px solid #00ff00;
+            border: 2px solid #a97cd6;
             border-radius: 12px;
             width: 315px;
             height: 32px;
@@ -152,76 +152,163 @@
     </style>
 
     <script> // Apply saved theme before page renders
-        const favicons = [
-            "https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png",
-            "https://www.wikipedia.org/static/favicon/wikipedia.ico",
-            "https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico",
-            "https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico"
-        ];
+         const favicons = [
+      { url: "https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png", type: "image/png" },
+      { url: "https://www.wikipedia.org/static/favicon/wikipedia.ico", type: "image/x-icon" },
+      { url: "https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico", type: "image/x-icon" },
+      { url: "https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico", type: "image/x-icon" }
+    ];
 
-        const pageTitles = ['Google', 'My.PPS', 'Wikipedia', 'Google Docs'];
+    const pageTitles = ['Google', 'My.PPS', 'Wikipedia', 'Google Docs'];
 
-        // Load saved favicon and title on page load
-        document.addEventListener("DOMContentLoaded", () => {
-            // Apply theme
-            if (localStorage.getItem("theme") === "dark") {
-                document.documentElement.classList.add("dark-mode");
-            }
+    let currentFavicon = 0;
+    let titleIndex = 0;
 
-            // Apply favicon
-            const savedFavicon = localStorage.getItem("faviconIndex");
-            if (savedFavicon !== null) {
-                setFavicon(parseInt(savedFavicon));
-            }
+    const slopeURL = "https://storage.classroomsarecool.mex.com/slope-2/index.html";
+    const fruitninjaURL = "https://storage.classroomsarecool.mex.com/fruitninja/index.html";
+    const paperminecraftURL = "https://turbowarp.org/402108615/embed";
+    const polytrackURL = "https://beta-polytrack.kodub.com/";
 
-            // Apply title
-            const savedTitleIndex = localStorage.getItem("titleIndex");
-            if (savedTitleIndex !== null) {
-                document.title = pageTitles[parseInt(savedTitleIndex)];
-            }
+    // Sidebar and fullscreen toggle button
+    const sidebar = document.querySelector('.sidebar');
+    const btn = document.querySelector('#btn');
 
-            // Sidebar toggle
-            const sidebar = document.querySelector('.sidebar');
-            const btn = document.querySelector('#btn');
-            btn.addEventListener('click', () => {
-                sidebar.classList.toggle('active');
-            });
+    document.addEventListener("DOMContentLoaded", () => {
+      // Restore theme
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark-mode");
+      }
 
-            // Theme toggle
-            window.toggleMode = function () {
-                const html = document.documentElement;
-                const isDark = html.classList.toggle("dark-mode");
-                localStorage.setItem("theme", isDark ? "dark" : "light");
-            };
-        });
+      // Restore favicon
+      const savedFavicon = localStorage.getItem("faviconIndex");
+      if (savedFavicon !== null) {
+        setFavicon(parseInt(savedFavicon));
+      }
 
-        let currentFavicon = 0;
-        function setFavicon(index) {
-            currentFavicon = index;
-            let oldLink = document.getElementById("favicon");
-            if (oldLink) oldLink.remove();
+      // Restore page title
+      const savedTitleIndex = localStorage.getItem("titleIndex");
+      if (savedTitleIndex !== null) {
+        titleIndex = parseInt(savedTitleIndex);
+        document.title = pageTitles[titleIndex];
+      }
 
-            let newLink = document.createElement("link");
-            newLink.id = "favicon";
-            newLink.rel = "icon";
-            newLink.type = "image/x-icon";
-            newLink.href = favicons[currentFavicon];
+      btn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        if (document.fullscreenElement) exitFullscreen();
+      });
+    });
 
-            document.head.appendChild(newLink);
-        }
+    function setFavicon(index) {
+      currentFavicon = index;
+      document.querySelectorAll('link[rel="icon"]').forEach(el => el.remove());
 
-        function switchFavicon() {
-            currentFavicon = (currentFavicon + 1) % favicons.length;
-            setFavicon(currentFavicon);
-            localStorage.setItem("faviconIndex", currentFavicon.toString());
-        }
+      const newLink = document.createElement('link');
+      newLink.rel = "icon";
+      newLink.type = favicons[currentFavicon].type;
+      newLink.href = favicons[currentFavicon].url + "?v=" + new Date().getTime();
+      document.head.appendChild(newLink);
+    }
 
-        let titleIndex = 0;
-        function changePageTitle() {
-            titleIndex = (titleIndex + 1) % pageTitles.length;
-            document.title = pageTitles[titleIndex];
-            localStorage.setItem("titleIndex", titleIndex.toString());
-        }
+    function switchFavicon() {
+      currentFavicon = (currentFavicon + 1) % favicons.length;
+      setFavicon(currentFavicon);
+      localStorage.setItem("faviconIndex", currentFavicon.toString());
+    }
+
+    function changePageTitle() {
+      titleIndex = (titleIndex + 1) % pageTitles.length;
+      document.title = pageTitles[titleIndex];
+      localStorage.setItem("titleIndex", titleIndex.toString());
+    }
+
+    function toggleMode() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle("dark-mode");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+
+    function startGame(game) {
+      document.getElementById("gameSelection").style.display = "none";
+      document.getElementById("secondRow").style.display = "none";
+      document.body.style.overflow = "hidden";
+
+      let wrapper, iframeSrc;
+
+      switch (game) {
+        case "slope":
+          wrapper = document.getElementById("slopeWrapper");
+          iframeSrc = slopeURL;
+          break;
+        case "fruitninja":
+          wrapper = document.getElementById("fruitninjaWrapper");
+          iframeSrc = fruitninjaURL;
+          break;
+        case "paperminecraft":
+          wrapper = document.getElementById("paperminecraftWrapper");
+          iframeSrc = paperminecraftURL;
+          break;
+        case "polytrack":
+          wrapper = document.getElementById("polytrackWrapper");
+          iframeSrc = polytrackURL;
+          break;
+        default:
+          return;
+      }
+
+      if (!document.getElementById(game + "Game")) {
+        const iframe = document.createElement("iframe");
+        iframe.src = iframeSrc;
+        iframe.allowFullscreen = true;
+        iframe.id = game + "Game";
+
+        wrapper.innerHTML = `<button class="exitButton" onclick="exitGame('${game}')">Exit Game</button>`;
+        wrapper.appendChild(iframe);
+      }
+
+      wrapper.style.display = "flex";
+      openFullscreen(document.documentElement);
+    }
+
+    function exitGame(game) {
+      document.getElementById("gameSelection").style.display = "flex";
+      document.getElementById("secondRow").style.display = "block";
+      document.body.style.overflow = "auto";
+
+      const wrapper = document.getElementById(game + "Wrapper");
+      if (!wrapper) return;
+
+      wrapper.style.display = "none";
+      wrapper.innerHTML = `<button class="exitButton" onclick="exitGame('${game}')">Exit Game</button>`;
+      exitFullscreen();
+    }
+
+    function openFullscreen(elem) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    }
+
+    function exitFullscreen() {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      else if (document.msExitFullscreen) document.msExitFullscreen();
+    }
+
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement) {
+        ["slope", "fruitninja", "paperminecraft", "polytrack"].forEach(exitGame);
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        ["slope", "fruitninja", "paperminecraft", "polytrack"].forEach(exitGame);
+      }
+    });
     </script>
 </head>
 
@@ -230,14 +317,14 @@
         <div class="top">
             <div class="logo">
                 <i class="bx bx-code-block"></i>
-                <span class="nav-item">Blob Web LITE v.0.4</span>
+                <span class="nav-item">Blob Web LITE v.0.9</span>
             </div>
             <i class="bx bx-menu" id="btn"></i>
         </div>
         <div class="user">
-            <img src="https://static.vecteezy.com/system/resources/previews/008/302/462/original/eps10-grey-user-icon-or-logo-in-simple-flat-trendy-modern-style-isolated-on-white-background-free-vector.jpg" alt="me" class="User-me" />
+            <img src="https://i.postimg.cc/rmC4bdZ0/Chat-GPT-Image-Jun-14-2025-05-58-35-PM.png" alt="me"
+                class="User-me" />
             <div>
-                <p class="bold">User</p>
             </div>
         </div>
         <ul>
@@ -248,7 +335,7 @@
                 <a href="Games.html"><i class='bx bx-game'></i> <span class="nav-item">Games</span></a>
             </li>
             <li>
-                <a href="proxies.html"><i class='bx bx-windows'></i> <span class="nav-item">Proxies</span></a>
+                <a href="proxies.html"><i class='bx bx-search-alt'></i> <span class="nav-item">Proxy</span></a>
             </li>
             <li>
                 <a href="Aboutme.html"><i class='bx bx-body'></i> <span class="nav-item">About me</span></a>
@@ -264,7 +351,7 @@
     </div>
     <div class="fetcher">
         <form method="get" action="/fetch">
-            <label style="color: #00ff00;" for="url">Enter URL:</label>
+            <label style="color: #fff;" for="url">Enter URL:</label>
             <input class="input" type="text" id="url" name="url" placeholder="https://example.com" required>
             <button type="submit">Fetch URL</button>
         </form>
