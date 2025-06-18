@@ -8,20 +8,18 @@
     <link id="favicon" rel="icon"
         href="https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet">
+    <link href="index.js" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         html,
         body {
+            margin: 0;
             height: 100%;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #793eb4;
-            color: #fff;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
         }
 
         .sidebar {
@@ -144,8 +142,8 @@
         }
 
         .dark-mode {
-            --bg-color: #ffffff;
-            --text-color: #00ff00;
+            --bg-color: #230b3b;
+            --text-color: #fff;
         }
 
         button {
@@ -363,7 +361,7 @@
                 <a href="Games.html"><i class='bx bx-game'></i> <span class="nav-item">Games</span></a>
             </li>
             <li>
-                <a href="proxies.html"><i class='bx bx-search-alt'></i> <span class="nav-item">Proxy</span></a>
+                <a href="proxy.html"><i class='bx bx-search-alt'></i> <span class="nav-item">Proxy</span></a>
             </li>
             <li>
                 <a href="Aboutme.html"><i class='bx bx-body'></i> <span class="nav-item">About me</span></a>
@@ -374,13 +372,13 @@
         </ul>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" id="aboutMePage">
         <h1>About Me</h1>
-        <p>Hello, Im Blob-HTML, a advid coder that has too much free time and. I code HTML, CSS mainly, but
-            do a little JavaScript</p>
+        <p>Hello, I'm Blob-HTML, an avid coder that has too much free time. I code in HTML and CSS mainly, but
+            I also dabble in JavaScript.</p>
         <br>
         <a href="https://github.com/Blob-HTML" target="_blank">
-            <p>Check Out my GitHub!</p>
+            <p>Check out my GitHub!</p>
         </a>
         <br>
         <p>Credits: Blob-HTML</p>
