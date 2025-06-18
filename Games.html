@@ -11,15 +11,26 @@
   <link href="styles.css" rel="stylesheet">
   <link href="index.js" rel="stylesheet">
 
+
   <style>
     html,
     body {
       margin: 0;
       height: 100%;
-      background: #793eb4;
-      color: #fff;
+      background: var(--bg-color);
+      color: var(--text-color);
       font-family: Arial, sans-serif;
       overflow-x: hidden;
+    }
+
+    :root {
+      --bg-color: #793eb4;
+      --text-color: #fff;
+    }
+
+    .dark-mode {
+      --bg-color: #230b3b;
+      --text-color: #fff;
     }
 
     .sidebar {
@@ -133,7 +144,7 @@
     }
 
     .gameWrapper {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
@@ -152,7 +163,7 @@
     .exitButton {
       position: absolute;
       top: 30px;
-      left: 100px;
+      left: 110px;
       padding: 10px 20px;
       background-color: #793eb4;
       color: #fff;
@@ -179,8 +190,15 @@
       }
 
       .gameSelection img {
-        width: 80%;
-        height: auto;
+        width: 210px;
+        height: 125px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px #793eb4;
+        cursor: pointer;
+        transition: transform 0.3s;
+        -webkit-box-shadow: 0px 12px 45px 20px #a97cd6;
+        -moz-box-shadow: 0px 12px 45px 20px #a97cd6;
+        box-shadow: 0px 12px 45px 20px #a97cd6;
       }
     }
   </style>
@@ -201,7 +219,7 @@
     <ul>
       <li><a href="index.html"><i class='bx bx-home-alt'></i><span class="nav-item">Home</span></a></li>
       <li><a href="Games.html"><i class='bx bx-game'></i><span class="nav-item">Games</span></a></li>
-      <li><a href="proxies.html"><i class='bx bx-search-alt'></i><span class="nav-item">Proxy</span></a></li>
+      <li><a href="proxy.html"><i class='bx bx-search-alt'></i><span class="nav-item">Proxy</span></a></li>
       <li><a href="Aboutme.html"><i class='bx bx-body'></i><span class="nav-item">About me</span></a></li>
       <li><a href="settings.html"><i class="bx bx-cog"></i><span class="nav-item">Settings</span></a></li>
     </ul>
@@ -240,7 +258,8 @@
   </div>
 
   <script>
-     const favicons = [
+
+    const favicons = [
       { url: "https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png", type: "image/png" },
       { url: "https://www.wikipedia.org/static/favicon/wikipedia.ico", type: "image/x-icon" },
       { url: "https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico", type: "image/x-icon" },
@@ -248,7 +267,6 @@
     ];
 
     const pageTitles = ['Google', 'My.PPS', 'Wikipedia', 'Google Docs'];
-
     let currentFavicon = 0;
     let titleIndex = 0;
 
@@ -257,39 +275,9 @@
     const paperminecraftURL = "https://turbowarp.org/402108615/embed";
     const polytrackURL = "https://beta-polytrack.kodub.com/";
 
-    // Sidebar and fullscreen toggle button
-    const sidebar = document.querySelector('.sidebar');
-    const btn = document.querySelector('#btn');
-
-    document.addEventListener("DOMContentLoaded", () => {
-      // Restore theme
-      if (localStorage.getItem("theme") === "dark") {
-        document.documentElement.classList.add("dark-mode");
-      }
-
-      // Restore favicon
-      const savedFavicon = localStorage.getItem("faviconIndex");
-      if (savedFavicon !== null) {
-        setFavicon(parseInt(savedFavicon));
-      }
-
-      // Restore page title
-      const savedTitleIndex = localStorage.getItem("titleIndex");
-      if (savedTitleIndex !== null) {
-        titleIndex = parseInt(savedTitleIndex);
-        document.title = pageTitles[titleIndex];
-      }
-
-      btn.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        if (document.fullscreenElement) exitFullscreen();
-      });
-    });
-
     function setFavicon(index) {
       currentFavicon = index;
       document.querySelectorAll('link[rel="icon"]').forEach(el => el.remove());
-
       const newLink = document.createElement('link');
       newLink.rel = "icon";
       newLink.type = favicons[currentFavicon].type;
@@ -317,67 +305,50 @@
 
     function startGame(game) {
       document.getElementById("gameSelection").style.display = "none";
-      document.getElementById("secondRow").style.display = "none";
       document.body.style.overflow = "hidden";
 
       let wrapper, iframeSrc;
-
-      switch (game) {
-        case "slope":
-          wrapper = document.getElementById("slopeWrapper");
-          iframeSrc = slopeURL;
-          break;
-        case "fruitninja":
-          wrapper = document.getElementById("fruitninjaWrapper");
-          iframeSrc = fruitninjaURL;
-          break;
-        case "paperminecraft":
-          wrapper = document.getElementById("paperminecraftWrapper");
-          iframeSrc = paperminecraftURL;
-          break;
-        case "polytrack":
-          wrapper = document.getElementById("polytrackWrapper");
-          iframeSrc = polytrackURL;
-          break;
-        default:
-          return;
+      if (game === "slope") {
+        wrapper = document.getElementById("slopeWrapper");
+        iframeSrc = slopeURL;
+      } else if (game === "fruitninja") {
+        wrapper = document.getElementById("fruitninjaWrapper");
+        iframeSrc = fruitninjaURL;
+      } else if (game === "paperminecraft") {
+        wrapper = document.getElementById("paperminecraftWrapper");
+        iframeSrc = paperminecraftURL;
+      } else if (game === "polytrack") {
+        wrapper = document.getElementById("polytrackWrapper");
+        iframeSrc = polytrackURL;
       }
 
       if (!document.getElementById(game + "Game")) {
         const iframe = document.createElement("iframe");
         iframe.src = iframeSrc;
-        iframe.allowFullscreen = true;
         iframe.id = game + "Game";
-
+        iframe.allowFullscreen = true;
         wrapper.innerHTML = `<button class="exitButton" onclick="exitGame('${game}')">Exit Game</button>`;
         wrapper.appendChild(iframe);
       }
 
-      wrapper.style.display = "flex";
+      wrapper.style.display = "block";
       openFullscreen(document.documentElement);
     }
 
     function exitGame(game) {
       document.getElementById("gameSelection").style.display = "flex";
-      document.getElementById("secondRow").style.display = "block";
       document.body.style.overflow = "auto";
-
       const wrapper = document.getElementById(game + "Wrapper");
       if (!wrapper) return;
-
+      wrapper.innerHTML = '';
       wrapper.style.display = "none";
-      wrapper.innerHTML = `<button class="exitButton" onclick="exitGame('${game}')">Exit Game</button>`;
       exitFullscreen();
     }
 
     function openFullscreen(elem) {
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-      }
+      if (elem.requestFullscreen) elem.requestFullscreen();
+      else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+      else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
     }
 
     function exitFullscreen() {
@@ -386,6 +357,34 @@
       else if (document.msExitFullscreen) document.msExitFullscreen();
     }
 
+    // Apply saved theme, favicon, title
+    document.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark-mode");
+      }
+
+      const savedFavicon = localStorage.getItem("faviconIndex");
+      if (savedFavicon !== null) {
+        setFavicon(parseInt(savedFavicon));
+      }
+
+      const savedTitleIndex = localStorage.getItem("titleIndex");
+      if (savedTitleIndex !== null) {
+        titleIndex = parseInt(savedTitleIndex);
+        document.title = pageTitles[titleIndex];
+      }
+
+      const sidebar = document.querySelector('.sidebar');
+      const btn = document.querySelector('#btn');
+      if (btn && sidebar) {
+        btn.addEventListener('click', () => {
+          sidebar.classList.toggle('active');
+          if (document.fullscreenElement) exitFullscreen();
+        });
+      }
+    });
+
+    // Auto exit game on fullscreen exit or Escape key
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement) {
         ["slope", "fruitninja", "paperminecraft", "polytrack"].forEach(exitGame);
@@ -397,6 +396,7 @@
         ["slope", "fruitninja", "paperminecraft", "polytrack"].forEach(exitGame);
       }
     });
+
   </script>
 </body>
 
