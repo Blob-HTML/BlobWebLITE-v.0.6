@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My.PPS</title>
-    <link id="favicon" rel="icon"
-        href="https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png" />
+    <title>BlobWebLITE</title>
+    <link id="favicon" rel="icon" href="https://i.postimg.cc/rmC4bdZ0/Chat-GPT-Image-Jun-14-2025-05-58-35-PM.png" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link href="styles.css" rel="stylesheet">
     <link href="index.js" rel="stylesheet">
@@ -178,44 +177,22 @@
 
     <script>
 
-        const favicons = [
-            { url: "https://filescdn.classlink.com/resources/customlinks/1614876373145-a1c0c502a7f64b38a8d0063691ce15e3.png", type: "image/png" },
-            { url: "https://www.wikipedia.org/static/favicon/wikipedia.ico", type: "image/x-icon" },
-            { url: "https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico", type: "image/x-icon" },
-            { url: "https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico", type: "image/x-icon" }
-        ];
-
-        const pageTitles = ['Google', 'My.PPS', 'Wikipedia', 'Google Docs'];
-
-        let currentFavicon = 0;
-        let titleIndex = 0;
-
         const slopeURL = "https://storage.classroomsarecool.mex.com/slope-2/index.html";
         const fruitninjaURL = "https://storage.classroomsarecool.mex.com/fruitninja/index.html";
         const paperminecraftURL = "https://turbowarp.org/402108615/embed";
         const polytrackURL = "https://beta-polytrack.kodub.com/";
 
-        // Sidebar and fullscreen toggle button
+        // Sidebar toggle
         const sidebar = document.querySelector('.sidebar');
         const btn = document.querySelector('#btn');
-
+        btn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+        
         document.addEventListener("DOMContentLoaded", () => {
             // Restore theme
             if (localStorage.getItem("theme") === "dark") {
                 document.documentElement.classList.add("dark-mode");
-            }
-
-            // Restore favicon
-            const savedFavicon = localStorage.getItem("faviconIndex");
-            if (savedFavicon !== null) {
-                setFavicon(parseInt(savedFavicon));
-            }
-
-            // Restore page title
-            const savedTitleIndex = localStorage.getItem("titleIndex");
-            if (savedTitleIndex !== null) {
-                titleIndex = parseInt(savedTitleIndex);
-                document.title = pageTitles[titleIndex];
             }
 
             btn.addEventListener('click', () => {
@@ -224,28 +201,6 @@
             });
         });
 
-        function setFavicon(index) {
-            currentFavicon = index;
-            document.querySelectorAll('link[rel="icon"]').forEach(el => el.remove());
-
-            const newLink = document.createElement('link');
-            newLink.rel = "icon";
-            newLink.type = favicons[currentFavicon].type;
-            newLink.href = favicons[currentFavicon].url + "?v=" + new Date().getTime();
-            document.head.appendChild(newLink);
-        }
-
-        function switchFavicon() {
-            currentFavicon = (currentFavicon + 1) % favicons.length;
-            setFavicon(currentFavicon);
-            localStorage.setItem("faviconIndex", currentFavicon.toString());
-        }
-
-        function changePageTitle() {
-            titleIndex = (titleIndex + 1) % pageTitles.length;
-            document.title = pageTitles[titleIndex];
-            localStorage.setItem("titleIndex", titleIndex.toString());
-        }
 
         function toggleMode() {
             const html = document.documentElement;
@@ -335,6 +290,8 @@
                 ["slope", "fruitninja", "paperminecraft", "polytrack"].forEach(exitGame);
             }
         });
+
+
     </script>
 </head>
 
@@ -361,7 +318,7 @@
                 <a href="Games.html"><i class='bx bx-game'></i> <span class="nav-item">Games</span></a>
             </li>
             <li>
-                <a href="proxies.html"><i class='bx bx-search-alt'></i> <span class="nav-item">Proxy</span></a>
+                <a href="proxy.html"><i class='bx bx-search-alt'></i> <span class="nav-item">Proxy</span></a>
             </li>
             <li>
                 <a href="Aboutme.html"><i class='bx bx-body'></i> <span class="nav-item">About me</span></a>
